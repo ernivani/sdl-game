@@ -10,6 +10,7 @@ public:
     void respawn(int x, int y) {
         rect.x = x;
         rect.y = y;
+        destination = { x, y }; 
         health = 100;
     }
     bool isAlive() { return health > 0; }
@@ -19,15 +20,16 @@ public:
     void setX(int x) { rect.x = x; }
     void setY(int y) { rect.y = y; }
 
-    void moveTo(int x, int y) {
-        rect.x = x - rect.w / 2;
-        rect.y = y - rect.h / 2;
-    }
+    void moveTo(int x, int y);
 
     const SDL_Rect& getRect() const { return rect; }
+    void updatePosition(); // will be used to update the entity's position in the main loop
 
+private:
+    SDL_Point destination;
+    float lerpSpeed = 0.05f; // change this for faster or slower movement
 protected:
     SDL_Rect rect;
     SDL_Color color;
-    int health; 
+    int health;
 };

@@ -23,13 +23,14 @@ int main(int argc, char* argv[]) {
     const int MAP_HEIGHT = 2000;
     const int CHARACTER_SPEED = 5;
     Entity character(MAP_WIDTH / 2, MAP_HEIGHT / 2, 50, 50, { 255, 0, 0, 255 });
+    character.moveTo(MAP_WIDTH / 2, MAP_HEIGHT / 2);
     SDL_Rect camera = { character.getX() - 400, character.getY() - 300, 800, 600 };
 
     std::vector<Monster> allyCreeps;
     std::vector<Monster> enemyCreeps;
     int moveTimer = 0;
     const int MOVE_RATE = 10;
-    int score = 0; 
+    int score = 0;
     int highScore = 0;
     int timeElapsed = 0;
     const int SCORE_RATE = 20000;
@@ -54,19 +55,21 @@ int main(int argc, char* argv[]) {
             }
             if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
-                case SDLK_UP: camera.y -= CHARACTER_SPEED; break;
-                case SDLK_DOWN: camera.y += CHARACTER_SPEED; break;
-                case SDLK_LEFT: camera.x -= CHARACTER_SPEED; break;
-                case SDLK_RIGHT: camera.x += CHARACTER_SPEED; break;
+                    case SDLK_UP: camera.y -= CHARACTER_SPEED; break;
+                    case SDLK_DOWN: camera.y += CHARACTER_SPEED; break;
+                    case SDLK_LEFT: camera.x -= CHARACTER_SPEED; break;
+                    case SDLK_RIGHT: camera.x += CHARACTER_SPEED; break;
                 }
             }
 
         }
+        character.updatePosition(); // add this just before rendering the character
 
         if (!character.isAlive()) {
-            deathTimer += MOVE_RATE; 
+            deathTimer += MOVE_RATE;
             if (deathTimer >= RESPAWN_TIME) {
                 character.respawn(MAP_WIDTH / 2, MAP_HEIGHT / 2);
+                character.moveTo(MAP_WIDTH / 2, MAP_HEIGHT / 2);
                 deathTimer = 0;
             }
             if (score > highScore) {
@@ -92,7 +95,7 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        for(auto& monster : allyCreeps) {
+        for (auto& monster : allyCreeps) {
             if (character.isAlive() && SDL_HasIntersection(&character.getRect(), &monster.getRect())) {
                 character.takeDamage(1);
                 monster.takeDamage(1);
@@ -203,4 +206,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
