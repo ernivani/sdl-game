@@ -21,7 +21,6 @@ int main(int argc, char* argv[]) {
 
     const int MAP_WIDTH = 3000;
     const int MAP_HEIGHT = 2000;
-    const int CHARACTER_SPEED = 5;
     Entity character(MAP_WIDTH / 2, MAP_HEIGHT / 2, 50, 50, { 255, 0, 0, 255 });
     character.moveTo(MAP_WIDTH / 2, MAP_HEIGHT / 2);
     SDL_Rect camera = { character.getX() - 400, character.getY() - 300, 800, 600 };
@@ -53,15 +52,6 @@ int main(int argc, char* argv[]) {
                     character.moveTo(event.button.x + camera.x, event.button.y + camera.y);
                 }
             }
-            if (event.type == SDL_KEYDOWN) {
-                switch (event.key.keysym.sym) {
-                    case SDLK_UP: camera.y -= CHARACTER_SPEED; break;
-                    case SDLK_DOWN: camera.y += CHARACTER_SPEED; break;
-                    case SDLK_LEFT: camera.x -= CHARACTER_SPEED; break;
-                    case SDLK_RIGHT: camera.x += CHARACTER_SPEED; break;
-                }
-            }
-
         }
         character.updatePosition(); // add this just before rendering the character
 
