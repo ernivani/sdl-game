@@ -244,3 +244,6 @@ TMX_TranslationProvider/TMX_TranslationProviderWithUITest.sln
 /InterpretBank/InterpretBankTests/Resources/exp2.tbx
 sdl game/sdl game.vcxproj.filters
 sdl game/sdl game.vcxproj
+.idea/.idea.sdl game/.idea/encodings.xml
+.idea/.idea.sdl game/.idea/indexLayout.xml
+.idea/.idea.sdl game/.idea/vcs.xml
